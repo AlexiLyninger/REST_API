@@ -65,6 +65,50 @@ let contactRepo = {
             }
         });
     },
+    update: function (newData, Email, resolve, reject) {
+        fs.readFile(FILE_NAME, function (err, data) {
+            if (err) {
+                reject(err);
+            }
+            else {
+                let contacts = JSON.parse(data);
+                let contact = contacts.find(c => c.Email === Email);
+                if (contact) {
+                    Object.assign(contact, newData);
+                    fs.writeFile(FILE_NAME, JSON.stringify(contacts), function (err) {
+                        if (err) {
+                            reject(err);
+                        }
+                        else {
+                            resolve(newData);
+                        }
+                    });
+                }
+            }
+        });
+    },
+    delete: function (Email, resolve, reject) {
+        fs.readFile(FILE_NAME, function (err, data) {
+            if (err) {
+                reject(err);
+            }
+            else {
+                let contacts = JSON.parse(data);
+                let index = contacts.findIndex(c => c.Email === Email);
+                if (index != -1) {
+                    contacts.splice(index, 1);
+                    fs.writeFile(FILE_NAME, JSON.stringify(contacts), function (err) {
+                        if (err) {
+                            reject(err);
+                        }
+                        else {
+                            resolve(index);
+                        }
+                    });
+                }
+            }
+        });
+    }
 };
 
 module.exports = contactRepo;

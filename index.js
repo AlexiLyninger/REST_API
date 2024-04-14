@@ -84,6 +84,90 @@ router.post('/', function (req, res, next) {
     });
 });
 
+//Update contact
+router.put('/:Email', function (req, res, next) {
+    contactRepo.getByID(req.params.Email, function (data) {
+        if (data) {
+            contactRepo.update(req.body, req.params.Email, function (data) {
+                res.status(200).json({
+                    "status": 200,
+            "statusText": "OK",
+            "message": "Contact '" + req.params.Email + "' updated.",
+            "data": data
+                });
+            });
+        } else {
+            res.status(404).json({
+                "status": 404,
+                "statusText": "Not Found",
+                "message": "The conatact '" + req.params.Email + "' could not be found.",
+                "error": {
+                    "code": "NOT_FOUND",
+                    "message": "The conatact '" + req.params.Email + "' could not be found."
+                }
+            });
+        }
+    }, function(err) {
+        next(err);
+    });
+});
+
+//Patch contact
+router.patch('/:Email', function (req, res, next) {
+    contactRepo.getByID(req.params.Email, function (data) {
+        if (data) {
+            contactRepo.update(req.body, req.params.Email, function (data) {
+                res.status(200).json({
+                    "status": 200,
+            "statusText": "OK",
+            "message": "Contact '" + req.params.Email + "' updated.",
+            "data": data
+                });
+            });
+        } else {
+            res.status(404).json({
+                "status": 404,
+                "statusText": "Not Found",
+                "message": "The conatact '" + req.params.Email + "' could not be found.",
+                "error": {
+                    "code": "NOT_FOUND",
+                    "message": "The conatact '" + req.params.Email + "' could not be found."
+                }
+            });
+        }
+    }, function(err) {
+        next(err);
+    });
+});
+
+//Delete contact
+router.delete('/:Email', function (req, res, next) {
+    contactRepo.getByID(req.params.Email, function (data) {
+        if (data) {
+            contactRepo.delete(req.params.Email, function (data) {
+                res.status(200).json({
+                    "status": 200,
+                    "statusText": "OK",
+                    "message": "The contact '" + req.params.Email + "' deleted.",
+                    "data": data
+                });
+            });
+        } else {
+            res.status(404).json({
+                "status": 404,
+                "statusText": "Not Found",
+                "message": "The conatact '" + req.params.Email + "' could not be found.",
+                "error": {
+                    "code": "NOT_FOUND",
+                    "message": "The conatact '" + req.params.Email + "' could not be found."
+                }
+            });
+        }
+    }, function(err) {
+        next(err);
+    });
+});
+
 //Configure router so all routes are prefixed with /api/v1
 app.use('/api/', router);
 
