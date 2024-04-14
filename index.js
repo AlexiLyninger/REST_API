@@ -69,6 +69,21 @@ router.get('/:Email', function (req, res, next) {
     });
 });
 
+//Add new contact
+router.post('/', function (req, res, next) {
+    contactRepo.insert(req.body, function(data) {
+        res.status(201).json({
+            "status": 201,
+            "statusText": "Created",
+            "message": "New contact Added.",
+            "data": data
+        });
+    },
+    function(err) {
+        next(err);
+    });
+});
+
 //Configure router so all routes are prefixed with /api/v1
 app.use('/api/', router);
 

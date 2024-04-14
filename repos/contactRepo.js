@@ -46,6 +46,25 @@ let contactRepo = {
             }
         });
     },
+    insert: function (newData, resolve, reject) {
+        fs.readFile(FILE_NAME, function (err, data) {
+            if (err) {
+                reject(err);
+            }
+            else {
+                let contacts = JSON.parse(data);
+                contacts.push(newData);
+                fs.writeFile(FILE_NAME, JSON.stringify(contacts), function (err) {
+                    if (err) {
+                        reject(err);
+                    }
+                    else {
+                        resolve(newData);
+                    }
+                });
+            }
+        });
+    },
 };
 
 module.exports = contactRepo;
