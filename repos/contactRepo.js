@@ -1,6 +1,6 @@
 let fs = require('fs');
 
-const FILE_NAME = './assets/contacts2.json';
+const FILE_NAME = './assets/contacts.json';
 
 let contactRepo = {
     get: function(resolve, reject) {
